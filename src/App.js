@@ -1,25 +1,41 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import './App.css';
-import Header from './components/Header';
-import Content from './components/Content';
-import Footer from './components/Footer';
+import Menu from './components/Menu';
+import Top from './components/Top';
+import ClassComponent from './components/ClassComponent'
+import {connect} from "react-redux";
 
-
-function App() {
-
-    return (
-        <div className="App">
-            <Header text={text}/>
-            <Content textChange={textChange}/>
-            <Footer />
-        </div>
-    );
+class App extends React.Component {
+    render() {
+        const { name, surname, age } = this.props.user;
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <h1 className="App-title">Мой топ фото</h1>
+                </header>
+                <p>
+                    Привет из App, {name} {surname}!
+                </p>
+                <p>Тебе уже {age} ?</p>
+            </div>
+        )
+    }
 }
 
-let text = false;
 
-const textChange = (props) => {
-    text = !text;
-};
+// приклеиваем данные из store
+const mapStateToProps = store => {
+    console.log(store) // посмотрим, что же у нас в store?
+    return {
+        user: store.user
+    }
+}
 
-export default App;
+export default connect(mapStateToProps)(App)
+
+// let text = "sdfsdfds";
+//
+// const textChange = (props) => {
+//     text = !text;
+// };
